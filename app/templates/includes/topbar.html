@@ -1,8 +1,38 @@
 <header class="topbar">
-    <div class="topbar-left"><h2>{% block page_title %}Dashboard{% endblock %}</h2></div>
-    <div class="topbar-right">
-        <span aria-label="Notifications"><i data-lucide="bell"></i></span>
-        <span aria-label="Settings"><i data-lucide="settings-2"></i></span>
-        <span><i data-lucide="circle-user-round"></i> {{ current_user.username }}</span>
+
+    <div class="topbar-left">
+
+        <!-- Mobile Sidebar Toggle -->
+        <button
+            type="button"
+            id="sidebarToggle"
+            class="sidebar-toggle"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+            <i data-lucide="menu"></i>
+        </button>
+
+        <h2>{% block page_title %}Dashboard{% endblock %}</h2>
+
     </div>
+
+
+    <div class="topbar-right">
+
+        <span aria-label="Notifications">
+            <i data-lucide="bell"></i>
+        </span>
+
+        <span aria-label="Settings">
+            <i data-lucide="settings-2"></i>
+        </span>
+
+        <span>
+            <i data-lucide="circle-user-round"></i>
+            {{ current_user.username }}
+        </span>
+
+    </div>
+
 </header>
