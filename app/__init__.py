@@ -11,6 +11,7 @@ from app.routes.dashboard import dashboard
 from app.routes.friends import friends
 from app.models.message import Message
 from app.routes.chat import chat
+from app.services.chat_service import ChatService
 import app.sockets.chat_events
 
 
@@ -45,6 +46,7 @@ def create_app():
     app = Flask(__name__)
 
     app.config.from_object(Config)
+    app.jinja_env.globals["format_chat_time"] = ChatService.format_time
 
     # Initialize Extensions
     db.init_app(app)

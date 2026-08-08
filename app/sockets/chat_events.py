@@ -34,7 +34,7 @@ def handle_disconnect():
     current_user.is_online = False
     current_user.last_seen = datetime.utcnow()
     db.session.commit()
-    emit("user_offline", {"user_id": current_user.id, "last_seen": current_user.last_seen.strftime("%I:%M %p")}, broadcast=True, include_self=False)
+    emit("user_offline", {"user_id": current_user.id, "last_seen": ChatService.format_time(current_user.last_seen)}, broadcast=True, include_self=False)
 
 
 @socketio.on("join")

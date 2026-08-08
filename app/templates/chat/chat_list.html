@@ -8,7 +8,7 @@
         {% for chat in chats %}
         <a href="{{ url_for('chat.conversation', user_id=chat.user.id) }}" class="chat-card" data-chat-user-id="{{ chat.user.id }}" data-chat-name="{{ chat.user.username|lower }}">
             <div class="user-avatar">{{ chat.user.username[0]|upper }}</div>
-            <div class="chat-info"><div class="chat-top"><h3>{{ chat.user.username }}</h3><span class="chat-time">{{ chat.last_message.created_at.strftime("%I:%M %p") if chat.last_message else "" }}</span></div><p class="chat-preview">{{ chat.prefix }}{% if chat.last_message.attachment_path %}{{ 'Voice message' if chat.last_message.attachment_type == 'voice' else 'Attachment' }}{% else %}{{ chat.last_message.content[:45] if chat.last_message else 'No messages yet.' }}{% endif %}</p></div>
+            <div class="chat-info"><div class="chat-top"><h3>{{ chat.user.username }}</h3><span class="chat-time">{{ format_chat_time(chat.last_message.created_at) if chat.last_message else "" }}</span></div><p class="chat-preview">{{ chat.prefix }}{% if chat.last_message.attachment_path %}{{ 'Voice message' if chat.last_message.attachment_type == 'voice' else 'Attachment' }}{% else %}{{ chat.last_message.content[:45] if chat.last_message else 'No messages yet.' }}{% endif %}</p></div>
             {% if chat.unread_count > 0 %}<div class="unread-badge">{{ chat.unread_count }}</div>{% endif %}
         </a>
         {% endfor %}

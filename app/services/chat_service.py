@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from app.extensions import db
 from app.models.message import Message
@@ -8,6 +8,16 @@ from app.services.friend_service import FriendService
 
 class ChatService:
     MAX_MESSAGE_LENGTH = 4000
+    IST_OFFSET = timedelta(hours=5, minutes=30)
+    IST_TIMEZONE = timezone(IST_OFFSET)
+
+    @staticmethod
+    def format_time(value):
+        if value is None:
+            return ""
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=timezone.utc)
+        return value.astimezone(ChatService.IST_TIMEZONE).strftime("%I:%M %p")
 
     @staticmethod
     def room_name(user_id, friend_id):
@@ -46,7 +56,7 @@ class ChatService:
         return {
             "id": message.id, "sender_id": message.sender_id, "receiver_id": message.receiver_id,
             "sender_name": message.sender.username, "receiver_name": message.receiver.username,
-            "message": message.content, "time": message.created_at.strftime("%I:%M %p"),
+            "message": message.content, "time": ChatService.format_time(message.created_at),
             "is_read": message.is_read,
             "attachment": ({"url": f"/chat/attachments/{message.id}", "name": message.attachment_name,
                             "mime": message.attachment_mime, "size": message.attachment_size,

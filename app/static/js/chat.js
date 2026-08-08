@@ -17,16 +17,38 @@ function initializeChat(userId, friendId) {
     currentFriendId = Number(friendId);
     const form = document.getElementById("chat-form");
     if (!form) return;
+    const messageInput = document.getElementById("message-input");
+    const cancelReplyButton = document.getElementById("cancel-reply");
     form.addEventListener("submit", sendMessage);
-    document.getElementById("message-input").addEventListener("input", handleTyping);
+    messageInput.addEventListener("input", handleTyping);
     document.getElementById("attachment-button").addEventListener("click", () => document.getElementById("file-input").click());
     document.getElementById("file-input").addEventListener("change", uploadSelectedFile);
     document.getElementById("voice-button").addEventListener("click", toggleRecording);
     document.getElementById("emoji-button").addEventListener("click", toggleEmojiPicker);
-    document.getElementById("cancel-reply").addEventListener("click", clearReply);
+    if (cancelReplyButton) {
+        cancelReplyButton.addEventListener("click", event => {
+            event.preventDefault();
+            event.stopPropagation();
+            clearReply();
+        });
+    }
+    form.addEventListener("click", event => {
+        if (event.target.closest("#cancel-reply")) {
+            event.preventDefault();
+            event.stopPropagation();
+            clearReply();
+        }
+    });
     document.querySelectorAll(".reply-message").forEach(button => button.addEventListener("click", () => setReply(button.closest(".message"))));
     document.querySelectorAll(".copy-message").forEach(button => button.addEventListener("click", () => copyMessage(button.closest(".message"))));
-    document.getElementById("message-input").addEventListener("keydown", handleComposerKeydown);
+    messageInput.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            clearReply();
+            return;
+        }
+        handleComposerKeydown(event);
+    });
     renderEmojiPicker();
     openConversation();
     scrollToBottom();
@@ -92,8 +114,10 @@ function toggleEmojiPicker(event) {
 
 function setReply(message) {
     replyText = message.querySelector(".message-content")?.innerText.trim().slice(0, 130) || "Attachment";
-    document.getElementById("reply-text").textContent = replyText;
-    document.getElementById("reply-preview").hidden = false;
+    const preview = document.getElementById("reply-preview");
+    const replyTextNode = document.getElementById("reply-text");
+    if (replyTextNode) replyTextNode.textContent = replyText;
+    if (preview) preview.hidden = false;
     document.getElementById("message-input").focus();
 }
 function clearReply() { replyText = ""; const preview = document.getElementById("reply-preview"); if (preview) preview.hidden = true; }
