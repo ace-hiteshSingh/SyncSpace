@@ -1,0 +1,10 @@
+.btn, .primary-btn, .secondary-btn, .auth-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 10px 18px; border-radius: var(--radius-md); font-weight: 600; font-size: 14px; transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition); }
+.btn:hover, .primary-btn:hover, .secondary-btn:hover, .auth-btn:hover { transform: translateY(-2px); }
+.btn:active, .primary-btn:active, .secondary-btn:active, .auth-btn:active { transform: translateY(0); }
+.btn-primary, .primary-btn, .auth-btn { color: #fff; background: var(--primary); box-shadow: 0 8px 18px rgba(102, 116, 244, 0.22); }
+.btn-primary:hover, .primary-btn:hover, .auth-btn:hover { background: var(--primary-hover); box-shadow: 0 13px 24px rgba(102, 116, 244, 0.34); }
+.btn-secondary, .secondary-btn { color: var(--text-secondary); background: rgba(255, 255, 255, 0.035); border: 1px solid var(--border-strong); }
+.btn-secondary:hover, .secondary-btn:hover { color: var(--text-primary); background: var(--bg-hover); }
+.btn-success { color: #062519; background: var(--success); }
+.btn-danger { color: #fff; background: var(--danger); }
+.btn-outline { color: var(--accent); background: transparent; border: 1px solid rgba(45, 212, 191, 0.45); }

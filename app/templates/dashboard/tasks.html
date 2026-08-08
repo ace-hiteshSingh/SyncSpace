@@ -1,0 +1,61 @@
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<section class="dashboard-shell">
+    <div class="hero-card">
+        <div class="hero-left">
+            <h1>Tasks</h1>
+            <p>Track your priorities in one place and keep momentum on every project.</p>
+        </div>
+    </div>
+
+    <div class="dashboard-card dashboard-section">
+        <div class="card-header">
+            <div>
+                <h2>Add task</h2>
+                <p>Create a new item and keep your plans moving.</p>
+            </div>
+        </div>
+        <form class="task-form" action="{{ url_for('dashboard.create_task') }}" method="POST">
+            <input type="text" name="title" placeholder="Add a task" required>
+            <textarea name="description" rows="2" placeholder="Task details"></textarea>
+            <select name="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Add task</button>
+        </form>
+    </div>
+
+    <div class="dashboard-card dashboard-section">
+        <div class="card-header">
+            <div>
+                <h2>Task list</h2>
+                <p>Mark items done, edit priorities, or remove them when complete.</p>
+            </div>
+        </div>
+        <div class="task-list">
+            {% if dashboard.tasks %}
+                {% for task in dashboard.tasks %}
+                <div class="task-item {% if task.done %}done{% endif %}">
+                    <form action="{{ url_for('dashboard.toggle_task', task_id=task.id) }}" method="POST" class="task-toggle-form">
+                        <input type="checkbox" {% if task.done %}checked{% endif %} onchange="this.form.submit()">
+                    </form>
+                    <div class="task-content">
+                        <strong>{{ task.title }}</strong>
+                        {% if task.description %}<small>{{ task.description }}</small>{% endif %}
+                    </div>
+                    <span class="task-pill {{ task.priority|default('medium') }}">{{ task.priority|default('medium') }}</span>
+                    <form action="{{ url_for('dashboard.delete_task', task_id=task.id) }}" method="POST" class="task-delete-form">
+                        <button type="submit" class="task-delete" aria-label="Delete task">×</button>
+                    </form>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-state">No tasks yet. Add one to keep the momentum going.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

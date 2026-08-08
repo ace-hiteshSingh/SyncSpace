@@ -1,0 +1,60 @@
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Workspaces{% endblock %}
+{% block content %}
+<section class="dashboard-shell">
+    <div class="hero-card">
+        <div class="hero-left">
+            <h1>Workspaces</h1>
+            <p>Create and manage the collaborative spaces that keep your ideas moving.</p>
+        </div>
+    </div>
+
+    <div class="dashboard-card dashboard-section">
+        <div class="card-header">
+            <div>
+                <h2>Create workspace</h2>
+                <p>Add a new hub for your projects and conversations.</p>
+            </div>
+        </div>
+        <form class="task-form" action="{{ url_for('dashboard.create_workspace') }}" method="POST">
+            <input type="text" name="name" placeholder="Workspace name" required>
+            <textarea name="description" rows="2" placeholder="What is this workspace for?"></textarea>
+            <select name="category">
+                <option value="Personal">Personal</option>
+                <option value="Product">Product</option>
+                <option value="Design">Design</option>
+                <option value="Engineering">Engineering</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Create workspace</button>
+        </form>
+    </div>
+
+    <div class="dashboard-card dashboard-section">
+        <div class="card-header">
+            <div>
+                <h2>Your workspaces</h2>
+                <p>Organized spaces you can revisit anytime.</p>
+            </div>
+        </div>
+        <div class="task-list">
+            {% if dashboard.workspaces %}
+                {% for workspace in dashboard.workspaces %}
+                <div class="task-item">
+                    <div class="task-content">
+                        <strong>{{ workspace.name }}</strong>
+                        {% if workspace.description %}<small>{{ workspace.description }}</small>{% endif %}
+                        <small>{{ workspace.category|default('Personal') }} • Updated {{ workspace.updated_at }}</small>
+                    </div>
+                    <span class="task-pill">{{ workspace.category|default('Personal') }}</span>
+                    <form action="{{ url_for('dashboard.delete_workspace', workspace_id=workspace.id) }}" method="POST" class="task-delete-form">
+                        <button type="submit" class="task-delete" aria-label="Delete workspace">×</button>
+                    </form>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-state">No workspaces yet. Start one and keep your ideas organized.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

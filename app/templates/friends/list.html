@@ -1,0 +1,46 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}My Friends{% endblock %}
+
+{% block content %}
+
+<div class="friends-page">
+
+    <h1>My Friends</h1>
+
+    {% if friends %}
+
+        {% for friend in friends %}
+
+        <div class="user-card">
+
+            <div class="user-avatar">
+                {{ friend.username[0]|upper }}
+            </div>
+
+            <div class="user-details">
+                <h3>{{ friend.username }}</h3>
+                <p>{{ friend.email }}</p>
+            </div>
+
+           <a
+    href="{{ url_for('chat.conversation', user_id=friend.id) }}"
+    class="btn btn-primary">
+
+    💬 Message
+
+</a>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>You don't have any friends yet.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

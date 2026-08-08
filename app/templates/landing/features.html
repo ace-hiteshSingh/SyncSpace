@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Features | SyncSpace{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">Everything in one place</span>
+        <h1>Built for smooth collaboration.</h1>
+        <p>From real-time chat to task tracking and profile management, SyncSpace gives teams a focused place to plan, communicate, and ship.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('auth.register') if not current_user.is_authenticated else url_for('dashboard.dashboard_home') }}" class="primary-btn">Start using SyncSpace</a>
+            <a href="{{ url_for('getting_started') }}" class="secondary-btn">How it works</a>
+        </div>
+    </div>
+</section>
+
+<section class="feature-showcase">
+    <div class="feature-card">
+        <h3>💬 Live chat</h3>
+        <p>Talk with teammates in real time and keep conversations organized by friend and room.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🗂️ Workspaces</h3>
+        <p>Create dedicated hubs for projects, ideas, or client work without leaving the app.</p>
+    </div>
+    <div class="feature-card">
+        <h3>📋 Task tracking</h3>
+        <p>Manage todos, priorities, and completion states in a beautifully simple dashboard.</p>
+    </div>
+</section>
+{% endblock %}

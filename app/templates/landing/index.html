@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home | SyncSpace{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">Real-time workspace for modern teams</span>
+        <h1>Collaborate Faster.<br>Build Better Together.</h1>
+        <p>SyncSpace brings chat, tasks, workspaces, and profile management into one polished experience so your team can move quickly from idea to completion.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('auth.register') if not current_user.is_authenticated else url_for('dashboard.dashboard_home') }}" class="primary-btn">Get Started</a>
+            <a href="{{ url_for('features') }}" class="secondary-btn">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<section class="feature-showcase">
+    <div class="feature-card">
+        <h3>⚡ Instant collaboration</h3>
+        <p>Live chat and shared workspaces keep everyone aligned without the friction of switching tools.</p>
+    </div>
+    <div class="feature-card">
+        <h3>✅ Organized workflow</h3>
+        <p>Track tasks, manage projects, and keep progress visible from one clean dashboard.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🧠 Personal profile</h3>
+        <p>Showcase your identity with a polished profile experience and avatar support.</p>
+    </div>
+</section>
+{% endblock %}

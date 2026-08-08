@@ -1,0 +1,73 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Friend Requests{% endblock %}
+
+{% block content %}
+
+<div class="friends-page">
+
+    <h1>Incoming Friend Requests</h1>
+
+    {% if requests %}
+
+        {% for request in requests %}
+
+        <div class="user-card">
+
+            <div class="user-avatar">
+                {{ request.sender.username[0]|upper }}
+            </div>
+
+            <div class="user-details">
+
+                <h3>{{ request.sender.username }}</h3>
+
+                <p>{{ request.sender.email }}</p>
+
+            </div>
+
+            <div style="display:flex; gap:10px;">
+
+                <form
+                    action="{{ url_for('friends.accept', request_id=request.id) }}"
+                    method="POST">
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit">
+
+                        Accept
+
+                    </button>
+
+                </form>
+
+                <form
+                    action="{{ url_for('friends.reject', request_id=request.id) }}"
+                    method="POST">
+
+                    <button
+                        class="btn btn-danger"
+                        type="submit">
+
+                        Reject
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No pending friend requests.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

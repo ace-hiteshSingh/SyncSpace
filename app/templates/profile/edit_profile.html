@@ -1,0 +1,53 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <h2>Edit Profile</h2>
+
+        <form method="POST">
+
+            <label>Bio</label>
+
+            <textarea
+                name="bio"
+                rows="5"
+            >{{ user.bio }}</textarea>
+
+            <label>Location</label>
+
+            <input
+                type="text"
+                name="location"
+                value="{{ user.location }}"
+            >
+
+            <label>Website</label>
+
+            <input
+                type="text"
+                name="website"
+                value="{{ user.website }}"
+            >
+
+            <br><br>
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

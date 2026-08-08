@@ -1,0 +1,40 @@
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<section class="dashboard-shell">
+    <div class="hero-card">
+        <div class="hero-left">
+            <h1>Settings</h1>
+            <p>Customize how SyncSpace feels and behaves for your workflow.</p>
+        </div>
+    </div>
+
+    <div class="dashboard-card dashboard-section">
+        <div class="card-header">
+            <div>
+                <h2>Preferences</h2>
+                <p>Adjust your experience without leaving the dashboard.</p>
+            </div>
+        </div>
+        <form class="settings-form" action="{{ url_for('dashboard.update_settings') }}" method="POST">
+            <label class="settings-option">
+                <span>Theme</span>
+                <select name="theme">
+                    <option value="dark" {% if dashboard.settings.get('theme', 'dark') == 'dark' %}selected{% endif %}>Dark</option>
+                    <option value="light" {% if dashboard.settings.get('theme', 'dark') == 'light' %}selected{% endif %}>Light</option>
+                </select>
+            </label>
+            <label class="settings-option">
+                <span>Notifications</span>
+                <input type="checkbox" name="notifications_enabled" {% if dashboard.settings.get('notifications_enabled', True) %}checked{% endif %}>
+            </label>
+            <label class="settings-option">
+                <span>Compact mode</span>
+                <input type="checkbox" name="compact_mode" {% if dashboard.settings.get('compact_mode', False) %}checked{% endif %}>
+            </label>
+            <button type="submit" class="btn btn-secondary">Save settings</button>
+        </form>
+    </div>
+
+</section>
+{% endblock %}

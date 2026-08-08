@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Getting Started | SyncSpace{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">Quick start</span>
+        <h1>Getting started is simple.</h1>
+        <p>Sign up, personalize your profile, and jump into chat or dashboard features in just a few steps.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('auth.register') if not current_user.is_authenticated else url_for('dashboard.dashboard_home') }}" class="primary-btn">Create your account</a>
+            <a href="{{ url_for('home') }}" class="secondary-btn">Back home</a>
+        </div>
+    </div>
+</section>
+
+<section class="feature-showcase">
+    <div class="feature-card">
+        <h3>1. Sign up</h3>
+        <p>Register quickly and start from a fresh workspace with your own profile.</p>
+    </div>
+    <div class="feature-card">
+        <h3>2. Personalize</h3>
+        <p>Upload an avatar and adjust your account settings to make the experience feel like yours.</p>
+    </div>
+    <div class="feature-card">
+        <h3>3. Start collaborating</h3>
+        <p>Open the dashboard, chat, or workspaces and begin sharing progress right away.</p>
+    </div>
+</section>
+{% endblock %}

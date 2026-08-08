@@ -1,0 +1,69 @@
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="dashboard-shell">
+    <div class="hero-card">
+        <div class="hero-left">
+            <h1>Welcome back, {{ user.username }}</h1>
+            <p>Your workspace is ready. Keep the momentum going and turn today’s ideas into progress.</p>
+            <div class="progress-area">
+                <span>Profile completion <strong>{{ profile_completion }}%</strong></span>
+                <div class="progress-bar"><div class="progress-fill" style="width: {{ profile_completion }}%;"></div></div>
+                <small>Just a few details left to make your profile shine.</small>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-avatar">
+                {% if user.avatar and user.avatar != 'default-avatar.png' %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ user.avatar) }}" alt="{{ user.username }} avatar">
+                {% else %}
+                    <i data-lucide="sparkles"></i>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-card"><div class="card-icon"><i data-lucide="users"></i></div><h3>Friends</h3><h1>{{ dashboard.friends_count }}</h1><p>Build your circle</p></div>
+        <div class="dashboard-card"><div class="card-icon"><i data-lucide="messages-square"></i></div><h3>Chats</h3><h1>{{ dashboard.chat_count }}</h1><p>Stay in the loop</p></div>
+        <div class="dashboard-card"><div class="card-icon"><i data-lucide="folder-kanban"></i></div><h3>Workspaces</h3><h1>{{ dashboard.workspace_count }}</h1><p>Organize ideas</p></div>
+        <div class="dashboard-card"><div class="card-icon"><i data-lucide="circle-check-big"></i></div><h3>Tasks</h3><h1>{{ dashboard.task_count }}</h1><p>Make it happen</p></div>
+    </div>
+
+    <div class="dashboard-main-grid">
+        <div class="dashboard-card dashboard-section">
+            <div class="card-header">
+                <div>
+                    <h2>Quick overview</h2>
+                    <p>Jump into the areas that matter most.</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <a href="{{ url_for('dashboard.workspaces_page') }}" class="btn btn-primary">Manage workspaces</a>
+                <a href="{{ url_for('dashboard.tasks_page') }}" class="btn btn-secondary">Manage tasks</a>
+                <a href="{{ url_for('dashboard.settings_page') }}" class="btn btn-outline">Manage settings</a>
+            </div>
+        </div>
+
+        <div class="dashboard-card dashboard-section">
+            <div class="card-header"><h2>Recent activity</h2></div>
+            <div class="card-body">
+                {% for item in dashboard.recent_activity %}
+                <div class="activity-item"><i data-lucide="sparkles"></i> {{ item }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h2>Quick actions</h2></div>
+        <div class="card-body">
+            <div class="action-buttons">
+                <a href="{{ url_for('profile.view_profile') }}" class="btn btn-primary">My profile</a>
+                <a href="{{ url_for('chat.chat_list') }}" class="btn btn-secondary">Open chats</a>
+                <a href="{{ url_for('friends.search') }}" class="btn btn-outline">Find friends</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

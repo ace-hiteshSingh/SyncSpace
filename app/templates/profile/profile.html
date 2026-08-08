@@ -1,0 +1,109 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <div class="profile-banner"></div>
+
+    <div class="profile-card">
+
+       <div class="profile-avatar">
+
+   {% if user.avatar and user.avatar != 'default-avatar.png' %}
+
+    <img
+        src="{{ url_for('static', filename='uploads/' ~ user.avatar) }}"
+        alt="Avatar"
+    >
+
+{% else %}
+
+    {{ user.username[0]|upper }}
+
+{% endif %}
+
+</div>
+
+<form
+    action="{{ url_for('profile.upload_avatar') }}"
+    method="POST"
+    enctype="multipart/form-data"
+>
+
+    <input
+        type="file"
+        name="avatar"
+        accept=".png,.jpg,.jpeg,.webp"
+    >
+
+    <br><br>
+
+    <button
+        class="btn btn-secondary"
+        type="submit"
+    >
+
+        Upload Avatar
+
+    </button>
+
+</form>
+
+        <h1>{{ user.username }}</h1>
+
+        <p class="email">{{ user.email }}</p>
+
+        <div class="profile-info">
+
+            <p><strong>📍 Location:</strong> {{ user.location or "Not specified" }}</p>
+
+            <p><strong>🌐 Website:</strong> {{ user.website or "Not specified" }}</p>
+
+        </div>
+
+        <div class="about-section">
+
+            <h3>About</h3>
+
+            <p>{{ user.bio or "No bio available yet." }}</p>
+
+        </div>
+
+        <div class="completion">
+
+            <div class="completion-header">
+
+                <span>Profile Completion</span>
+
+                <span>{{ profile_completion }}%</span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    style="width: {{ profile_completion }}%;"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <a
+            href="{{ url_for('profile.edit_profile') }}"
+            class="btn btn-primary"
+        >
+
+            Edit Profile
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

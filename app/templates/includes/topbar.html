@@ -1,0 +1,8 @@
+<header class="topbar">
+    <div class="topbar-left"><h2>{% block page_title %}Dashboard{% endblock %}</h2></div>
+    <div class="topbar-right">
+        <span aria-label="Notifications"><i data-lucide="bell"></i></span>
+        <span aria-label="Settings"><i data-lucide="settings-2"></i></span>
+        <span><i data-lucide="circle-user-round"></i> {{ current_user.username }}</span>
+    </div>
+</header>

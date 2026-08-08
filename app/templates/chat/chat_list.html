@@ -1,0 +1,18 @@
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Chats{% endblock %}
+{% block content %}
+<section class="chat-list-container" data-current-user-id="{{ current_user.id }}">
+    <div class="chat-list-heading"><div><p class="eyebrow">MESSAGES</p><h1>Chats</h1></div><a href="{{ url_for('friends.friends_list') }}" class="new-chat-button" aria-label="Start a new chat"><i data-lucide="square-pen"></i></a></div>
+    <label class="chat-search"><i data-lucide="search"></i><input id="chat-list-search" type="search" placeholder="Search conversations" autocomplete="off"></label>
+    <div id="chat-list" class="chat-list">
+        {% for chat in chats %}
+        <a href="{{ url_for('chat.conversation', user_id=chat.user.id) }}" class="chat-card" data-chat-user-id="{{ chat.user.id }}" data-chat-name="{{ chat.user.username|lower }}">
+            <div class="user-avatar">{{ chat.user.username[0]|upper }}</div>
+            <div class="chat-info"><div class="chat-top"><h3>{{ chat.user.username }}</h3><span class="chat-time">{{ chat.last_message.created_at.strftime("%I:%M %p") if chat.last_message else "" }}</span></div><p class="chat-preview">{{ chat.prefix }}{% if chat.last_message.attachment_path %}{{ 'Voice message' if chat.last_message.attachment_type == 'voice' else 'Attachment' }}{% else %}{{ chat.last_message.content[:45] if chat.last_message else 'No messages yet.' }}{% endif %}</p></div>
+            {% if chat.unread_count > 0 %}<div class="unread-badge">{{ chat.unread_count }}</div>{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    <div id="empty-chat-list" class="empty-chat-list" {% if chats %}hidden{% endif %}><i data-lucide="message-circle-more"></i><h2>No chats yet</h2><p>Start a conversation with one of your friends.</p><a href="{{ url_for('friends.friends_list') }}" class="btn btn-primary">View friends</a></div>
+</section>
+{% endblock %}

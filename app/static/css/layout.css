@@ -1,0 +1,2 @@
+.dashboard-wrapper { min-height: 100vh; }.main-content { min-height: 100vh; margin-left: 272px; }.page-content { width: min(1180px, calc(100% - 64px)); margin: 0 auto; padding: 36px 0 56px; animation: enter-up .55s both; }
+@media (max-width: 900px) { .main-content { margin-left: 0; }.page-content { width: min(100% - 32px, 680px); padding: 24px 0 40px; } }
